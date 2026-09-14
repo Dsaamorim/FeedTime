@@ -1,0 +1,10 @@
+{
+  "name": "feedtime",
+  "private": true,
+  "scripts": {
+    "gen-icons": "node gen_icons.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.0"
+  }
+}

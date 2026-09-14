@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Feedtime — painel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap"
+  rel="stylesheet"
+/>
+<style>
+  :root {
+    color-scheme: light dark;
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-soft: #52514e;
+    --muted: #898781;
+    --line: #e1e0d9;
+    --line-strong: #c3c2b7;
+    --linkedin: #2a78d6;
+    --facebook: #eb6834;
+    --linkedin-bg: #e8f0fb;
+    --facebook-bg: #fdece4;
+    --danger: #d03b3b;
+    --ok: #0ca30c;
+    --focus: #2563a8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --ink: #ffffff;
+      --ink-soft: #c3c2b7;
+      --muted: #898781;
+      --line: #2c2c2a;
+      --line-strong: #383835;
+      --linkedin: #3987e5;
+      --facebook: #d95926;
+      --linkedin-bg: rgba(57, 135, 229, 0.14);
+      --facebook-bg: rgba(217, 89, 38, 0.14);
+      --danger: #e66767;
+      --ok: #0ca30c;
+      --focus: #7fb3e8;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    line-height: 1.6;
+  }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  h1, h2, h3 { font-family: "IBM Plex Sans Condensed", sans-serif; margin: 0; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  [hidden] { display: none !important; }
+
+  .wrap { max-width: 880px; margin-inline: auto; padding-inline: clamp(16px, 5vw, 28px); }
+
+  header.top {
+    border-bottom: 1px solid var(--line);
+    padding-block: 16px;
+  }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 1.05rem; }
+  .brand .swatch { width: 10px; height: 10px; border-radius: 3px; background: linear-gradient(135deg, var(--linkedin) 50%, var(--facebook) 50%); }
+  .who { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; color: var(--ink-soft); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    font: inherit; font-weight: 600; font-size: 0.85rem;
+    border: 1px solid var(--line); border-radius: 6px; padding: 8px 14px;
+    background: transparent; color: var(--ink); cursor: pointer; text-decoration: none;
+  }
+  .btn--primary { background: var(--ink); color: var(--page); border-color: var(--ink); }
+
+  main { padding-block: clamp(24px, 5vw, 36px) 64px; }
+  section + section { margin-top: 36px; }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+
+  .login-shell { max-width: 380px; margin: 10vh auto 0; }
+  .field { display: block; margin-bottom: 14px; font-size: 0.85rem; color: var(--ink-soft); }
+  .field span { display: block; margin-bottom: 6px; }
+  .field input {
+    width: 100%; font: inherit; font-size: 0.95rem; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px;
+  }
+  .actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .message { margin-top: 14px; font-size: 0.85rem; min-height: 1.2em; }
+  .message--error { color: var(--danger); }
+  .message--ok { color: var(--ok); }
+
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 620px) { .tiles { grid-template-columns: 1fr; } }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+  .tile-label { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .tile-value { font-size: 1.7rem; font-weight: 600; }
+  .tile-breakdown { display: flex; gap: 14px; margin-top: 10px; font-size: 0.82rem; color: var(--ink-soft); }
+  .tile-breakdown span { display: inline-flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .legend-dot--linkedin { background: var(--linkedin); }
+  .legend-dot--facebook { background: var(--facebook); }
+
+  .legend { display: flex; gap: 16px; font-size: 0.85rem; color: var(--ink-soft); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+  .chart-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px 20px 8px; position: relative; }
+  .chart-grid { position: relative; height: 220px; display: flex; }
+  .y-axis { display: flex; flex-direction: column; justify-content: space-between; width: 46px; flex: none; text-align: right; padding-right: 10px; }
+  .y-axis span { font-size: 0.72rem; color: var(--muted); transform: translateY(50%); }
+  .y-axis span:first-child { transform: translateY(0); }
+  .y-axis span:last-child { transform: translateY(100%); }
+  .plot { position: relative; flex: 1; display: flex; align-items: flex-end; gap: clamp(6px, 2vw, 18px); border-left: 1px solid var(--line); }
+  .gridlines { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; pointer-events: none; }
+  .gridlines div { border-top: 1px solid var(--line); height: 0; }
+  .day-col { flex: 1; display: flex; align-items: flex-end; justify-content: center; gap: 3px; height: 100%; position: relative; }
+  .bar { width: 30%; max-width: 22px; border-radius: 4px 4px 0 0; min-height: 2px; transition: opacity 0.15s ease; }
+  @media (prefers-reduced-motion: reduce) { .bar { transition: none; } }
+  .bar--linkedin { background: var(--linkedin); }
+  .bar--facebook { background: var(--facebook); }
+  .day-col:hover .bar { opacity: 0.75; }
+  .x-axis { display: flex; margin-left: 46px; gap: clamp(6px, 2vw, 18px); margin-top: 8px; }
+  .x-axis span { flex: 1; text-align: center; font-size: 0.75rem; color: var(--muted); }
+
+  .tooltip {
+    position: absolute; z-index: 5; pointer-events: none;
+    background: var(--ink); color: var(--page); font-size: 0.78rem;
+    padding: 6px 9px; border-radius: 5px; white-space: nowrap;
+    transform: translate(-50%, -110%); opacity: 0; transition: opacity 0.1s ease;
+  }
+  .tooltip.show { opacity: 1; }
+
+  .toggle-table { margin-top: 14px; font-size: 0.82rem; background: none; border: none; color: var(--linkedin); cursor: pointer; padding: 4px 0; text-decoration: underline; }
+
+  table.data-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.88rem; }
+  table.data-table th, table.data-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  table.data-table td.num, table.data-table th.num { text-align: right; font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+
+  .empty-state {
+    background: var(--surface); border: 1px dashed var(--line-strong); border-radius: 10px;
+    padding: 32px 24px; text-align: center; color: var(--ink-soft);
+  }
+  .empty-state h3 { margin-bottom: 8px; color: var(--ink); }
+  .empty-state code { font-family: "IBM Plex Mono", monospace; background: var(--page); padding: 2px 6px; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><span class="swatch"></span>Feedtime</div>
+    <div class="who" id="whoBox" hidden>
+      <span id="whoEmail" class="mono"></span>
+      <button class="btn" id="refreshBtn">Atualizar</button>
+      <button class="btn" id="signOutBtn">Sair</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="loginSection" class="login-shell" hidden>
+    <h2 style="margin-bottom:6px;">Entrar</h2>
+    <p style="color:var(--ink-soft); margin-top:0 0 18px;">Use a mesma conta configurada na extensão Feedtime.</p>
+    <form id="authForm">
+      <label class="field"><span>E-mail</span><input type="email" id="email" autocomplete="email" required /></label>
+      <label class="field"><span>Senha</span><input type="password" id="password" autocomplete="current-password" minlength="6" required /></label>
+      <div class="actions">
+        <button type="submit" class="btn btn--primary">Entrar</button>
+        <button type="button" class="btn" id="signUpBtn">Criar conta</button>
+      </div>
+    </form>
+    <p id="authMessage" class="message" role="status" aria-live="polite"></p>
+  </section>
+
+  <div id="appSection" hidden>
+
+    <section id="tilesSection">
+      <div class="tiles">
+        <div class="tile">
+          <div class="tile-label">Hoje</div>
+          <div class="tile-value mono" id="tileToday">0min</div>
+          <div class="tile-breakdown">
+            <span><span class="legend-dot legend-dot--linkedin"></span><span id="tileTodayLinkedin" class="mono">0min</span></span>
+            <span><span class="legend-dot legend-dot--facebook"></span><span id="tileTodayFacebook" class="mono">0min</span></span>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="tile-label">Esta semana</div>
+          <div class="tile-value mono" id="tileWeek">0min</div>
+          <div class="tile-breakdown">
+            <span><span class="legend-dot legend-dot--linkedin"></span><span id="tileWeekLinkedin" class="mono">0min</span></span>
+            <span><span class="legend-dot legend-dot--facebook"></span><span id="tileWeekFacebook" class="mono">0min</span></span>
+          </div>
+        </div>
+        <div class="tile">
+          <div class="tile-label">Média diária (7 dias)</div>
+          <div class="tile-value mono" id="tileAvg">0min</div>
+          <div class="tile-breakdown"><span>por dia, nas duas redes somadas</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="chartSection">
+      <div class="section-head">
+        <h2>Últimos 7 dias</h2>
+        <div class="legend">
+          <span><span class="legend-dot legend-dot--linkedin"></span>LinkedIn</span>
+          <span><span class="legend-dot legend-dot--facebook"></span>Facebook</span>
+        </div>
+      </div>
+
+      <div id="chartCard" class="chart-card">
+        <div class="chart-grid">
+          <div class="y-axis" id="yAxis"></div>
+          <div class="plot" id="plot">
+            <div class="gridlines"><div></div><div></div><div></div></div>
+            <div class="tooltip" id="tooltip"></div>
+          </div>
+        </div>
+        <div class="x-axis" id="xAxis"></div>
+      </div>
+
+      <button class="toggle-table" id="toggleTableBtn">Ver como tabela</button>
+      <table class="data-table" id="dataTable" hidden>
+        <thead><tr><th>Dia</th><th class="num">LinkedIn</th><th class="num">Facebook</th><th class="num">Total</th></tr></thead>
+        <tbody id="dataTableBody"></tbody>
+      </table>
+    </section>
+
+    <section id="emptySection" hidden>
+      <div class="empty-state">
+        <h3>Ainda sem dados</h3>
+        <p>Instale a extensão Feedtime, faça login com esta mesma conta e navegue normalmente.<br />
+        Os primeiros minutos aparecem aqui em cerca de 1 minuto (é o intervalo de sincronização).</p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

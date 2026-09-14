@@ -1,0 +1,4 @@
+const FEEDTIME_CONFIG = {
+  SUPABASE_URL: "https://SEU-PROJETO.supabase.co",
+  SUPABASE_ANON_KEY: "SUA-CHAVE-ANON-PUBLICA"
+};

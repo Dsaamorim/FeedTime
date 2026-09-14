@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="popup.css" />
+  <title>Feedtime</title>
+</head>
+<body>
+  <header class="head">
+    <div class="brand">
+      <img src="icons/icon32.png" alt="" width="20" height="20" />
+      <span>Feedtime</span>
+    </div>
+    <span id="authBadge" class="auth-badge auth-badge--off">não sincronizado</span>
+  </header>
+
+  <section class="stats" aria-label="Tempo de hoje">
+    <p class="stats-label">Hoje</p>
+
+    <div class="stat-row">
+      <span class="dot dot--linkedin" aria-hidden="true"></span>
+      <span class="stat-name">LinkedIn</span>
+      <span id="linkedinTime" class="stat-time mono">0min</span>
+    </div>
+    <div class="stat-row">
+      <span class="dot dot--facebook" aria-hidden="true"></span>
+      <span class="stat-name">Facebook</span>
+      <span id="facebookTime" class="stat-time mono">0min</span>
+    </div>
+  </section>
+
+  <p id="idleNote" class="idle-note" hidden>Abra uma dessas abas para começar a contar.</p>
+
+  <footer class="foot">
+    <a id="dashboardLink" class="btn btn--primary" href="#" target="_blank" rel="noopener">Ver painel completo</a>
+    <a id="optionsLink" class="btn btn--ghost" href="#">Login / ajustes</a>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

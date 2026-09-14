@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="options.css" />
+  <title>Feedtime — ajustes</title>
+</head>
+<body>
+  <main class="wrap">
+    <div class="brand">
+      <img src="icons/icon48.png" alt="" width="32" height="32" />
+      <h1>Feedtime</h1>
+    </div>
+
+    <section id="loggedOutView">
+      <p class="lede">
+        Entre para sincronizar o tempo entre seus navegadores e acessar o painel completo.
+      </p>
+
+      <form id="authForm">
+        <label class="field">
+          <span>E-mail</span>
+          <input type="email" id="email" autocomplete="email" required />
+        </label>
+        <label class="field">
+          <span>Senha</span>
+          <input type="password" id="password" autocomplete="current-password" minlength="6" required />
+        </label>
+
+        <div class="actions">
+          <button type="submit" id="signInBtn" class="btn btn--primary">Entrar</button>
+          <button type="button" id="signUpBtn" class="btn btn--ghost">Criar conta</button>
+        </div>
+      </form>
+
+      <p id="authMessage" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="loggedInView" hidden>
+      <p class="lede">
+        Conectado como <strong id="userEmail" class="mono"></strong>. O Feedtime está
+        sincronizando o tempo automaticamente.
+      </p>
+      <a id="dashboardLink" class="btn btn--primary" href="#" target="_blank" rel="noopener">Abrir painel completo</a>
+      <button id="signOutBtn" class="btn btn--ghost">Sair desta conta</button>
+    </section>
+
+    <footer class="foot">
+      <p>
+        Os dados ficam no seu projeto Supabase. Configure a conexão em
+        <code class="mono">extension/config.js</code>.
+      </p>
+    </footer>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="lib/supabase.min.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

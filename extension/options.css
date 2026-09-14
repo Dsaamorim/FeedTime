@@ -1,0 +1,110 @@
+:root {
+  color-scheme: light dark;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --ink: #0b0b0b;
+  --ink-soft: #52514e;
+  --muted: #898781;
+  --line: #e1e0d9;
+  --danger: #d03b3b;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #ffffff;
+    --ink-soft: #c3c2b7;
+    --muted: #898781;
+    --line: #2c2c2a;
+    --danger: #e66767;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+.mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+
+.wrap {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 48px 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.brand img { border-radius: 8px; }
+.brand h1 {
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.lede { color: var(--ink-soft); margin-bottom: 24px; }
+
+.field {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.field span { display: block; margin-bottom: 6px; }
+.field input {
+  width: 100%;
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+.field input:focus-visible { outline: 2px solid #2a78d6; outline-offset: 1px; }
+
+.actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+.btn--primary { background: var(--ink); color: var(--page); }
+.btn--ghost { background: transparent; border-color: var(--line); color: var(--ink); }
+
+#loggedInView .btn { margin-top: 6px; margin-right: 8px; }
+
+.message {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  min-height: 1.2em;
+}
+.message--error { color: var(--danger); }
+.message--ok { color: #0ca30c; }
+
+.foot {
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.foot code { font-size: 0.78rem; }
